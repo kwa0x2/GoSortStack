@@ -16,7 +16,7 @@ var (
 )
 
 
-func Parse(args []string) (*stack.Operations, error) {
+func Parse(args []string, silent bool) (*stack.Operations, error) {
 	if len(args) == 0 {
 		return nil, ErrNoArgs
 	}
@@ -41,7 +41,7 @@ func Parse(args []string) (*stack.Operations, error) {
 		return nil, ErrDuplicate
 	}
 
-	ops := stack.NewOperations(false)
+	ops := stack.NewOperations(silent)
 	loadStack(ops, numbers)
 
 	return ops, nil

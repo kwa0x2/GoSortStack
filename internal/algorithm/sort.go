@@ -1,7 +1,6 @@
 package algorithm
 
 import (
-	"github.com/kwa0x2/GoSortStack/internal/checker"
 	"github.com/kwa0x2/GoSortStack/internal/operations"
 	"github.com/kwa0x2/GoSortStack/internal/stack"
 )
@@ -53,7 +52,7 @@ func rotateTypeBA(a, b *stack.Node) int {
 }
 
 func sortBTill3(ops *stack.Operations) {
-	for stack.Size(ops.StackA) > 3 && !checker.IsSorted(ops.StackA) {
+	for stack.Size(ops.StackA) > 3 && !stack.IsSorted(ops.StackA) {
 		tmp := ops.StackA
 		minCost := rotateTypeAB(ops.StackA, ops.StackB)
 
@@ -74,16 +73,16 @@ func sortBTill3(ops *stack.Operations) {
 }
 
 func sortB(ops *stack.Operations) {
-	if stack.Size(ops.StackA) > 3 && !checker.IsSorted(ops.StackA) {
+	if stack.Size(ops.StackA) > 3 && !stack.IsSorted(ops.StackA) {
 		operations.PushB(ops)
 	}
-	if stack.Size(ops.StackA) > 3 && !checker.IsSorted(ops.StackA) {
+	if stack.Size(ops.StackA) > 3 && !stack.IsSorted(ops.StackA) {
 		operations.PushB(ops)
 	}
-	if stack.Size(ops.StackA) > 3 && !checker.IsSorted(ops.StackA) {
+	if stack.Size(ops.StackA) > 3 && !stack.IsSorted(ops.StackA) {
 		sortBTill3(ops)
 	}
-	if !checker.IsSorted(ops.StackA) {
+	if !stack.IsSorted(ops.StackA) {
 		SortThree(ops)
 	}
 }
@@ -110,7 +109,7 @@ func sortA(ops *stack.Operations) {
 }
 
 func Sort(ops *stack.Operations) {
-	if checker.IsSorted(ops.StackA) {
+	if stack.IsSorted(ops.StackA) {
 		return
 	}
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/kwa0x2/GoSortStack/internal/stack"
+	"github.com/kwa0x2/GoSortStack/internal/visualizer"
 )
 
 func SwapA(o *stack.Operations) {
@@ -12,8 +13,9 @@ func SwapA(o *stack.Operations) {
 	}
 	stack.SwapStack(&o.StackA)
 	if !o.Silent {
-		fmt.Println("sa")
+		fmt.Println("SwapA")
 	}
+	visualizer.ShowStep(o, "SwapA")
 }
 
 func SwapB(o *stack.Operations) {
@@ -22,8 +24,9 @@ func SwapB(o *stack.Operations) {
 	}
 	stack.SwapStack(&o.StackB)
 	if !o.Silent {
-		fmt.Println("sb")
+		fmt.Println("SwapB")
 	}
+	visualizer.ShowStep(o, "SwapB")
 }
 
 func RotateA(o *stack.Operations) {
@@ -32,8 +35,9 @@ func RotateA(o *stack.Operations) {
 	}
 	stack.RotateStack(&o.StackA)
 	if !o.Silent {
-		fmt.Println("ra")
+		fmt.Println("RotateA")
 	}
+	visualizer.ShowStep(o, "RotateA")
 }
 
 func RotateB(o *stack.Operations) {
@@ -42,8 +46,9 @@ func RotateB(o *stack.Operations) {
 	}
 	stack.RotateStack(&o.StackB)
 	if !o.Silent {
-		fmt.Println("rb")
+		fmt.Println("RotateB")
 	}
+	visualizer.ShowStep(o, "RotateB")
 }
 
 func PushA(o *stack.Operations) {
@@ -52,8 +57,9 @@ func PushA(o *stack.Operations) {
 	}
 	stack.PushStack(&o.StackA, &o.StackB)
 	if !o.Silent {
-		fmt.Println("pa")
+		fmt.Println("PushA")
 	}
+	visualizer.ShowStep(o, "PushA")
 }
 
 func PushB(o *stack.Operations) {
@@ -62,8 +68,9 @@ func PushB(o *stack.Operations) {
 	}
 	stack.PushStack(&o.StackB, &o.StackA)
 	if !o.Silent {
-		fmt.Println("pb")
+		fmt.Println("PushB")
 	}
+	visualizer.ShowStep(o, "PushB")
 }
 
 func ReverseRotateA(o *stack.Operations) {
@@ -72,8 +79,9 @@ func ReverseRotateA(o *stack.Operations) {
 	}
 	stack.ReverseRotateStack(&o.StackA)
 	if !o.Silent {
-		fmt.Println("rra")
+		fmt.Println("ReverseRotateA")
 	}
+	visualizer.ShowStep(o, "ReverseRotateA")
 }
 
 func ReverseRotateB(o *stack.Operations) {
@@ -82,8 +90,9 @@ func ReverseRotateB(o *stack.Operations) {
 	}
 	stack.ReverseRotateStack(&o.StackB)
 	if !o.Silent {
-		fmt.Println("rrb")
+		fmt.Println("ReverseRotateB")
 	}
+	visualizer.ShowStep(o, "ReverseRotateB")
 }
 
 func ReverseRotateBoth(o *stack.Operations) {
@@ -95,8 +104,9 @@ func ReverseRotateBoth(o *stack.Operations) {
 	stack.ReverseRotateStack(&o.StackB)
 
 	if !o.Silent {
-		fmt.Println("rrr")
+		fmt.Println("ReverseRotateBoth")
 	}
+	visualizer.ShowStep(o, "ReverseRotateBoth")
 }
 
 func RotateBoth(o *stack.Operations) {
@@ -108,8 +118,9 @@ func RotateBoth(o *stack.Operations) {
 	stack.RotateStack(&o.StackB)
 
 	if !o.Silent {
-		fmt.Println("rr")
+		fmt.Println("RotateBoth")
 	}
+	visualizer.ShowStep(o, "RotateBoth")
 }
 
 func SwapBoth(o *stack.Operations) {
@@ -121,7 +132,7 @@ func SwapBoth(o *stack.Operations) {
 	stack.SwapStack(&o.StackB)
 
 	if !o.Silent {
-		fmt.Println("ss")
+		fmt.Println("SwapBoth")
 	}
+	visualizer.ShowStep(o, "SwapBoth")
 }
- 

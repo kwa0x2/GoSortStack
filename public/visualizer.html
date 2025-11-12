@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Stack Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0099ff, #0033ff, #8800ff);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+            color: #0a0a0a;
+            letter-spacing: 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            cursor: pointer;
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        button:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            border-color: #333;
+            color: #333;
+            background: rgba(50, 50, 50, 0.1);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-label {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        #current-operation {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        .stacks-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.02);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            min-height: 600px;
+        }
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .stack-label {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+            letter-spacing: 5px;
+            padding: 10px 30px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .stack-items {
+            max-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 3px;
+            flex: 1;
+            justify-content: flex-start;
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .stack-items::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .stack-items::-webkit-scrollbar-track {
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .stack-items::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .stack-items::-webkit-scrollbar-thumb:hover {
+            background: #00ff88;
+        }
+
+        .stack-items::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .stack-item {
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stack-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .stack-item:hover::before {
+            left: 100%;
+        }
+
+        .stack-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+        }
+
+        input[type="range"] {
+            width: 150px;
+            height: 5px;
+            background: rgba(0, 255, 0, 0.2);
+            outline: none;
+            border-radius: 5px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            border: none;
+        }
+
+        .error {
+            color: #ff0000;
+            text-align: center;
+            padding: 40px;
+            font-size: 24px;
+            text-shadow: 0 0 20px #ff0000;
+        }
+
+        /* Matrix rain effect in background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .stacks-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+
+    <div class="info">
+        <div class="info-item">
+            <div class="info-label">STEP</div>
+            <div class="info-value"><span id="current-step">0</span> / <span id="total-steps">0</span></div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">OPERATION</div>
+            <div class="info-value" id="current-operation">-</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="first-btn" onclick="firstStep()">⏮ FIRST</button>
+        <button id="prev-btn" onclick="prevStep()">⏪ PREV</button>
+        <button id="play-btn" onclick="togglePlay()">▶ PLAY</button>
+        <button id="next-btn" onclick="nextStep()">NEXT ⏩</button>
+        <button id="last-btn" onclick="lastStep()">LAST ⏭</button>
+
+        <div class="speed-control">
+            <label for="speed">SPEED:</label>
+            <input type="range" id="speed" min="1" max="2000" value="500" step="1">
+            <span id="speed-label">500ms</span>
+        </div>
+    </div>
+
+    <div class="stacks-container">
+        <div class="stack">
+            <div class="stack-label">STACK A</div>
+            <div class="stack-items" id="stack-a"></div>
+        </div>
+        <div class="stack">
+            <div class="stack-label">STACK B</div>
+            <div class="stack-items" id="stack-b"></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = '01';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * canvas.height;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        let data = null;
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let speed = 500;
+
+        function loadData() {
+            try {
+                if (typeof EMBEDDED_DATA !== 'undefined') {
+                    data = EMBEDDED_DATA;
+                } else {
+                    throw new Error('No embedded data found');
+                }
+
+                if (!data || !data.initial || !data.steps) {
+                    throw new Error('Invalid data format');
+                }
+
+                document.getElementById('total-steps').textContent = data.steps.length;
+                showStep(0);
+            } catch (error) {
+                document.querySelector('.stacks-container').innerHTML =
+                    '<div class="error">ERROR: No visualization data. Run with -v flag.</div>';
+                console.error('Error:', error);
+            }
+        }
+
+        function getColor(value, min, max) {
+            const ratio = (value - min) / (max - min);
+            const hue = (1 - ratio) * 240;
+            return `hsl(${hue}, 100%, 50%)`;
+        }
+
+        function renderStack(stackId, values) {
+            const container = document.getElementById(stackId);
+            container.innerHTML = '';
+
+            if (values.length === 0) {
+                return;
+            }
+
+            const allValues = currentStep === 0 ?
+                data.initial :
+                [...data.steps[currentStep - 1].stackA, ...data.steps[currentStep - 1].stackB];
+            const min = Math.min(...allValues);
+            const max = Math.max(...allValues);
+
+            values.forEach(value => {
+                const item = document.createElement('div');
+                item.className = 'stack-item';
+                item.textContent = value;
+                const color = getColor(value, min, max);
+                item.style.background = color;
+                item.style.width = `${(value / max) * 100}%`;
+                item.style.boxShadow = `0 0 15px ${color}`;
+                container.appendChild(item);
+            });
+        }
+
+        function showStep(stepIndex) {
+            if (!data) return;
+
+            currentStep = stepIndex;
+            document.getElementById('current-step').textContent = currentStep;
+
+            if (currentStep === 0) {
+                renderStack('stack-a', data.initial);
+                renderStack('stack-b', []);
+                document.getElementById('current-operation').textContent = 'INITIAL';
+            } else {
+                const step = data.steps[currentStep - 1];
+                renderStack('stack-a', step.stackA);
+                renderStack('stack-b', step.stackB);
+                document.getElementById('current-operation').textContent = step.operation.toUpperCase();
+            }
+
+            updateButtons();
+        }
+
+        function updateButtons() {
+            document.getElementById('first-btn').disabled = currentStep === 0;
+            document.getElementById('prev-btn').disabled = currentStep === 0;
+            document.getElementById('next-btn').disabled = currentStep >= data.steps.length;
+            document.getElementById('last-btn').disabled = currentStep >= data.steps.length;
+        }
+
+        function firstStep() {
+            stopPlay();
+            showStep(0);
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < data.steps.length) {
+                showStep(currentStep + 1);
+            } else {
+                stopPlay();
+            }
+        }
+
+        function lastStep() {
+            stopPlay();
+            showStep(data.steps.length);
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                stopPlay();
+            } else {
+                startPlay();
+            }
+        }
+
+        function startPlay() {
+            isPlaying = true;
+            document.getElementById('play-btn').textContent = '⏸ PAUSE';
+
+            playInterval = setInterval(() => {
+                if (currentStep < data.steps.length) {
+                    nextStep();
+                } else {
+                    stopPlay();
+                }
+            }, speed);
+        }
+
+        function stopPlay() {
+            isPlaying = false;
+            document.getElementById('play-btn').textContent = '▶ PLAY';
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        document.getElementById('speed').addEventListener('input', (e) => {
+            speed = parseInt(e.target.value);
+            document.getElementById('speed-label').textContent = speed + 'ms';
+
+            if (isPlaying) {
+                stopPlay();
+                startPlay();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    prevStep();
+                    break;
+                case 'ArrowRight':
+                    nextStep();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    togglePlay();
+                    break;
+                case 'Home':
+                    firstStep();
+                    break;
+                case 'End':
+                    lastStep();
+                    break;
+            }
+        });
+
+        loadData();
+    </script>
+</body>
+</html>

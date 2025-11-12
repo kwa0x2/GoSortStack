@@ -1,7 +1,6 @@
 package algorithm
 
 import (
-	"github.com/kwa0x2/GoSortStack/internal/checker"
 	"github.com/kwa0x2/GoSortStack/internal/operations"
 	"github.com/kwa0x2/GoSortStack/internal/stack"
 )
@@ -12,7 +11,7 @@ func SortThree(ops *stack.Operations) {
 		return 
 	}
 
-	if checker.IsSorted(ops.StackA) {
+	if stack.IsSorted(ops.StackA) {
 		return
 	}
 
@@ -24,7 +23,7 @@ func SortThree(ops *stack.Operations) {
 		operations.SwapA(ops)
 	} else if ops.StackA.Value == max {
 		operations.RotateA(ops)
-		if !checker.IsSorted(ops.StackA) {
+		if !stack.IsSorted(ops.StackA) {
 			operations.SwapA(ops)
 		}
 	} else {

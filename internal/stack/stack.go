@@ -21,19 +21,16 @@ func NewOperations(silent bool) *Operations {
 	}
 }
 
-// add a value to the top of stack A
 func (o *Operations) PushToA(value int) {
 	newNode := &Node{Value: value, Next: o.StackA}
 	o.StackA = newNode
 }
 
-// add a value to the top of stack B
 func (o *Operations) PushToB(value int) {
 	newNode := &Node{Value: value, Next: o.StackB}
 	o.StackB = newNode
 }
 
-// debug
 func (o *Operations) PrintA(label string) {
 	fmt.Print(label, ": ")
 	if o.StackA == nil {
@@ -176,4 +173,20 @@ func FindIndex(head *Node, value int) int {
 		current = current.Next
 	}
 	return -1
+}
+
+func IsSorted(head *Node) bool {
+	if head == nil {
+		return true
+	}
+
+	current := head
+	for current.Next != nil {
+		if current.Value > current.Next.Value {
+			return false
+		}
+		current = current.Next
+	}
+
+	return true
 }

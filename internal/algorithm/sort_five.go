@@ -1,13 +1,12 @@
 package algorithm
 
 import (
-	"github.com/kwa0x2/GoSortStack/internal/checker"
 	"github.com/kwa0x2/GoSortStack/internal/operations"
 	"github.com/kwa0x2/GoSortStack/internal/stack"
 )
 
 func SortFive(ops *stack.Operations) {
-	if checker.IsSorted(ops.StackA) {
+	if stack.IsSorted(ops.StackA) {
 		return
 	}
 
