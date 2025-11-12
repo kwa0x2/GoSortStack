@@ -1,8 +1,8 @@
 # 🚀 GoSortStack
 
-A modern and blazingly fast **stack sorting algorithm** written in Go, featuring a stunning web-based visualizer with Matrix-style effects!
+A modern and blazingly fast **stack sorting algorithm** written in Go, featuring a stunning web-based visualizer
 
-![Visualization](https://smartsrt.s3.eu-west-3.amazonaws.com/visualization2.gif)
+![Visualization](https://raw.githubusercontent.com/kwa0x2/GoSortStack/master/public/visualization.svg)
 
 ## 📋 Table of Contents
 
