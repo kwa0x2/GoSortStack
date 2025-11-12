@@ -120,7 +120,7 @@ Rotate Stack A to bring the smallest element to the top
 ### Learn More
 
 For a detailed explanation of the algorithm, check out this excellent article:
-- [Push Swap — A journey to find the most efficient sorting algorithm](https://medium.com/@ayogun/push-swap-c1f5d2d41e97) by Ahmet Yoğun
+- [Push Swap — A journey to find the most efficient sorting algorithm](https://medium.com/@ayogun/push-swap-c1f5d2d41e97) by Ali Ogun
 ---
 
 ## 🎨 Visualizer
@@ -267,7 +267,7 @@ Edit `visualizer.html` - the program automatically uses it.
 This project is a modern Go implementation of the classic C Push Swap project. The algorithm is based on the **Turk Algorithm**.
 
 Special thanks to:
-- [Ahmet Yoğun](https://github.com/ayogun) for the excellent algorithm explanation and reference implementation
+- [Ali Ogun](https://github.com/ayogun) for the excellent algorithm explanation and reference implementation
 - [Medium Article](https://medium.com/@ayogun/push-swap-c1f5d2d41e97) - Comprehensive algorithm breakdown
 
 ---
