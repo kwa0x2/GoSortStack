@@ -2,7 +2,7 @@
 
 A modern and blazingly fast **stack sorting algorithm** written in Go, featuring a stunning web-based visualizer with Matrix-style effects!
 
-![Visualization](https://smartsrt.s3.eu-west-3.amazonaws.com/visualization.gif)
+![Visualization](https://smartsrt.s3.eu-west-3.amazonaws.com/visualization2.gif)
 
 ## 📋 Table of Contents
 
