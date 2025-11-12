@@ -2,7 +2,7 @@
 
 A modern and blazingly fast **stack sorting algorithm** written in Go, featuring a stunning web-based visualizer
 
-![Visualization](https://raw.githubusercontent.com/kwa0x2/GoSortStack/master/public/visualization.svg)
+![Visualization](https://raw.githubusercontent.com/kwa0x2/GoSortStack/master/public/visualization.gif)
 
 ## 📋 Table of Contents
 
@@ -127,8 +127,7 @@ For a detailed explanation of the algorithm, check out this excellent article:
 
 ### Features
 
-- 🌈 **Matrix-Themed UI**: Neon green Matrix rain effects
-- ⚡ **Speed Control**: Adjust animation speed from 10ms to 2000ms
+- ⚡ **Speed Control**: Adjust animation speed from 1ms to 2000ms
 - 🎮 **Keyboard Shortcuts**:
   - `←` `→` Previous/Next step
   - `Space` Play/Pause
